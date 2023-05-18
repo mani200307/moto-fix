@@ -11,7 +11,7 @@ const Map = ({ location, locationChanged }) => {
 
     const markerIcon = new L.Icon({
         iconUrl: require('../../assets/marker.png'),
-        iconSize: [35, 45],
+        iconSize: [25, 35],
         iconAnchor: [17, 46],
         popupAnchor: [0, -46]
     })
