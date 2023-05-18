@@ -1,27 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import Header from './components/Header/Header'
-import Map from './components/Map/Map'
-import Controls from './components/Controls/Controls'
-import useGeoLocation from './api/useGeoLocation'
+import React from 'react'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import Home from './pages/Home'
+import Search from './pages/Search'
+import './index.css'
 
 const App = () => {
 
-  const location = useGeoLocation();
-
-  const [locationChanged, setLocationChanged] = useState(false);
-
-  useEffect(() => {
-    setLocationChanged(true);
-  }, [location]);
-
   return (
-    <div className="flex flex-col h-screen md:flex-row">
-      <Map location={location} locationChanged={locationChanged}/>
-      <div className="flex-1">
-        <Header />
-        <Controls />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/search' element={<Search />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
