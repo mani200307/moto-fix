@@ -9,7 +9,7 @@ const Header = () => {
                 <div className='text-xl'>User</div>
             </div>
             <div className='mx-10 my-2'>
-                <input type='text' className='bg-gray-100 w-full rounded-xl p-2'/>
+                {/* <input type='text' className='bg-gray-100 w-full rounded-xl p-2'/> */}
             </div>
         </div>
     )
