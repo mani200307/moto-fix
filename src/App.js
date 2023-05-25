@@ -1,17 +1,28 @@
 import React from 'react'
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Search from './pages/Search'
+import Signup from './pages/Signup'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
+import { AuthProvider } from './contexts/AuthContext'
+import Login from './pages/Login'
+import PrivateRoute from './pages/PrivateRoute'
 
 const App = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/search' element={<Search />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route exact path='/home' element={<PrivateRoute />}>
+            <Route exact path='/home' element={<Home />} />
+          </Route>
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/search' element={<Search />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
