@@ -19,7 +19,7 @@ const Home = () => {
       <Map location={location} locationChanged={locationChanged}/>
       <div className="flex-1">
         <Header />
-        <Controls />
+        <Controls location={location} locationChanged={locationChanged}/>
       </div>
     </div>
   )

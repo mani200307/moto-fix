@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import { AuthProvider } from './contexts/AuthContext'
 import Login from './pages/Login'
-import PrivateRoute from './pages/PrivateRoute'
+import PrivateRoute from './privateRoute/PrivateRoute'
 
 const App = () => {
 
@@ -20,7 +20,9 @@ const App = () => {
           </Route>
           <Route path='/signup' element={<Signup />} />
           <Route path='/' element={<Login />} />
-          <Route path='/search' element={<Search />} />
+          <Route exact path='/search' element={<PrivateRoute />}>
+            <Route exact path='/search' element={<Search />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

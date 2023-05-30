@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import 'tailwindcss/tailwind.css';
 import { useAuth } from '../../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
     const [error, setError] = useState('')
@@ -22,11 +22,11 @@ const Header = () => {
 
     return (
         <div className=''>
-            <div className='flex justify-between items-center m-10'>
-                <div className='text-3xl'>MotoFix</div>
-                <div className='flex items-center'>
-                    <div className='text-lg'>{ curUser.email }</div>
-                    <Button variant='link' onClick={handleLogout} className='text-xl border-gray-100 ml-2 no-underline text-black'>Log out</Button>
+            <div className='flex justify-between m-10'>
+                <Link className='text-3xl border-gray-100 ml-2 no-underline text-black'>MotoFix</Link>
+                <div className='flex flex-col mt-1 items-center'>
+                    <div className='text-md'>{curUser.email}</div>
+                    <Button variant='link' onClick={handleLogout} className='text-lg border-gray-100 no-underline text-black'>Log out</Button>
                 </div>
             </div>
             <div className='mx-10 my-2'>
