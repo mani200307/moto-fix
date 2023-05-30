@@ -9,6 +9,7 @@ import { db } from '../firebase';
 const Search = () => {
   const { state } = useLocation();
   const userCoords = state.location.coordinates;
+  const type = state.type;
 
   const findDist = (a1, a2) => {
     const x1 = a1.lat, y1 = a1.lng;
@@ -20,7 +21,9 @@ const Search = () => {
   const getNearestStores = (locations, userCoords) => {
     var loc = [];
     for (var i = 0; i < locations.length; i++) {
-      if(findDist(locations[i], userCoords) < 1.5)
+      if(locations[i].type !== type)
+        continue;
+      if(findDist(locations[i], userCoords) < 100)
         loc.push(locations[i]);
     }
     return loc;
@@ -29,7 +32,7 @@ const Search = () => {
   const [storeInfo, setStoreInfo] = useState([]);
   const storeInfoCollectionsRef = collection(db, "store");
 
-  var locations = storeInfo.map((info) => { return { lat: info.lat, lng: info.lng } })
+  var locations = storeInfo.map((info) => { return { lat: info.lat, lng: info.lng, type: info.type } })
   locations = getNearestStores(locations, userCoords);
 
   useEffect(() => {

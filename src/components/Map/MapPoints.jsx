@@ -26,8 +26,6 @@ const MapPoints = ({ locations, userCoord }) => {
         setMapKey(mapKey + 1); // Update the mapKey to re-render the map when locations change
     }, [locations]);
 
-    console.log(userCoord);
-
     return (
         <MapContainer className="w-full flex-1" center={[userCoord.lat, userCoord.lng]} zoom={10} key={mapKey} ref={mapRef}>
             <TileLayer

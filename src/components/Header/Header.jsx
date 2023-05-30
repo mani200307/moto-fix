@@ -9,8 +9,6 @@ const Header = ({ search }) => {
     const { curUser, logout } = useAuth();
     const navigate = useNavigate();
 
-    console.log(search);
-
     const handleLogout = async () => {
         setError('');
 

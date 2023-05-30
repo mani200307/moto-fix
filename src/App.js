@@ -8,6 +8,7 @@ import './index.css'
 import { AuthProvider } from './contexts/AuthContext'
 import Login from './pages/Login'
 import PrivateRoute from './privateRoute/PrivateRoute'
+import StoreAdmin from './pages/StoreAdmin'
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
             <Route exact path='/home' element={<Home />} />
           </Route>
           <Route path='/signup' element={<Signup />} />
+          <Route path='/store' element={<StoreAdmin />} />
           <Route path='/' element={<Login />} />
           <Route exact path='/search' element={<PrivateRoute />}>
             <Route exact path='/search' element={<Search />} />
