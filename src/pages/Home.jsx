@@ -18,7 +18,7 @@ const Home = () => {
     <div className="flex flex-col h-screen md:flex-row">
       <Map location={location} locationChanged={locationChanged}/>
       <div className="flex-1">
-        <Header />
+        <Header search={false}/>
         <Controls location={location} locationChanged={locationChanged}/>
       </div>
     </div>

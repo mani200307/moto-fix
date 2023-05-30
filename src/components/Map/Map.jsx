@@ -10,7 +10,7 @@ const Map = ({ location, locationChanged }) => {
     const [mapKey, setMapKey] = useState(0);
 
     const markerIcon = new L.Icon({
-        iconUrl: require('../../assets/marker.png'),
+        iconUrl: require('../../assets/green-marker.png'),
         iconSize: [25, 35],
         iconAnchor: [17, 46],
         popupAnchor: [0, -46]

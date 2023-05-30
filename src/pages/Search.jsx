@@ -31,7 +31,7 @@ const Search = () => {
     <div className="flex flex-col h-screen md:flex-row">
       <MapPoints locations={locations} userCoord={userCoords}/>
       <div className="flex-1">
-        <Header />
+        <Header search={true}/>
       </div>
     </div>
   )
