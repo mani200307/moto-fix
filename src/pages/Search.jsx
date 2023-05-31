@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import MapPoints from '../components/Map/MapPoints';
 import Header from '../components/Header/Header';
-import Controls from '../components/Controls/Controls';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -10,6 +9,7 @@ const Search = () => {
   const { state } = useLocation();
   const userCoords = state.location.coordinates;
   const type = state.type;
+  var avail = false;
 
   const findDist = (a1, a2) => {
     const x1 = a1.lat, y1 = a1.lng;
@@ -21,10 +21,12 @@ const Search = () => {
   const getNearestStores = (locations, userCoords) => {
     var loc = [];
     for (var i = 0; i < locations.length; i++) {
-      if(locations[i].type !== type)
+      if (locations[i].type !== type)
         continue;
-      if(findDist(locations[i], userCoords) < 100)
+      if (findDist(locations[i], userCoords) < 100) {
+        avail = true;
         loc.push(locations[i]);
+      }
     }
     return loc;
   }
@@ -32,7 +34,7 @@ const Search = () => {
   const [storeInfo, setStoreInfo] = useState([]);
   const storeInfoCollectionsRef = collection(db, "store");
 
-  var locations = storeInfo.map((info) => { return { lat: info.lat, lng: info.lng, type: info.type } })
+  var locations = storeInfo.map((info) => { return { lat: info.lat, lng: info.lng, type: info.type, email: info.email, id: info.id } })
   locations = getNearestStores(locations, userCoords);
 
   useEffect(() => {
@@ -48,7 +50,15 @@ const Search = () => {
     <div className="flex flex-col h-screen md:flex-row">
       <MapPoints locations={locations} userCoord={userCoords} />
       <div className="flex-1">
-        <Header search={true} />
+        <Header search={true} avail={avail} />
+        {avail && (
+          <div className='m-12 flex items-center justify-center my-2'>
+            <Link to='/book' state={{userLocation : userCoords, locations : locations}}><button type="button" className="btn btn-success">Book Now!</button></Link>
+          </div>
+        )}
+        <div className='mt-8 flex items-center justify-center'>
+          {avail ? <h3>Great, Store available</h3> : <h3>Oops, No available stores</h3>}
+        </div>
       </div>
     </div>
   )

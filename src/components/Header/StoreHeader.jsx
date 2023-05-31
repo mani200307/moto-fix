@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import { Button } from 'react-bootstrap';
 import 'tailwindcss/tailwind.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const StoreHeader = () => {
     const [error, setError] = useState('')
     const { curUser, logout } = useAuth();
     const navigate = useNavigate();
@@ -14,7 +13,7 @@ const Header = () => {
 
         try {
             await logout();
-            navigate('/');
+            navigate('/store/login');
         } catch (err) {
             setError('Failed to log out')
         }
@@ -23,7 +22,7 @@ const Header = () => {
     return (
         <div className=''>
             <div className='flex justify-between m-10'>
-                <Link to='/home' className='text-3xl border-gray-100 ml-2 no-underline text-black'>MotoFix</Link>
+                <Link to='/store' className='text-3xl border-gray-100 ml-2 no-underline text-black'>MotoFix</Link>
                 <div className='flex flex-col mt-1 items-center'>
                     <div className='text-md'>{curUser.email}</div>
                     <button onClick={handleLogout} className='text-lg border-gray-100 no-underline text-black'>Log out</button>
@@ -33,4 +32,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default StoreHeader

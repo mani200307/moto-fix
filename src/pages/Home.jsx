@@ -3,6 +3,8 @@ import Header from '../components/Header/Header';
 import Map from '../components/Map/Map';
 import Controls from '../components/Controls/Controls'
 import useGeoLocation from '../api/useGeoLocation';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Home = () => {
 
@@ -13,13 +15,13 @@ const Home = () => {
   useEffect(() => {
     setLocationChanged(true);
   }, [location]);
-
+  
   return (
     <div className="flex flex-col h-screen md:flex-row">
-      <Map location={location} locationChanged={locationChanged}/>
+      <Map location={location} locationChanged={locationChanged} />
       <div className="flex-1">
-        <Header search={false}/>
-        <Controls location={location} locationChanged={locationChanged}/>
+        <Header search={false} />
+        <Controls location={location} locationChanged={locationChanged} />
       </div>
     </div>
   )
