@@ -3,8 +3,6 @@ import Header from '../components/Header/Header';
 import Map from '../components/Map/Map';
 import Controls from '../components/Controls/Controls'
 import useGeoLocation from '../api/useGeoLocation';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
 
 const Home = () => {
 
