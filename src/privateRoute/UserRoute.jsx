@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 const UserRoute = ({ component: Component, ...rest }) => {
     const { curUser } = useAuth();
 
-    return curUser ? <Outlet /> : <Navigate to="/" />
+    return curUser ? <Outlet /> : <Navigate to="/login" />
 }
 
 export default UserRoute;

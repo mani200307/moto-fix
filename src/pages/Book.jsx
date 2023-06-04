@@ -5,7 +5,7 @@ import Controls from '../components/Controls/Controls';
 import useGeoLocation from '../api/useGeoLocation';
 import { Link, useLocation } from 'react-router-dom';
 import { db } from '../firebase';
-import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, onSnapshot, updateDoc } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from 'react-bootstrap';
 
@@ -38,8 +38,7 @@ const Book = () => {
 
         getUserData();
 
-        const timer = setInterval(async () => {
-            console.log('Timer');
+        const acceptStore = async () => {
             const data = await getDocs(userInfoCollectionsRef);
             for (var i = 0; i < data.docs.length; i++) {
                 const storeDoc = doc(db, 'auth-user', data.docs[i].id);
@@ -50,19 +49,32 @@ const Book = () => {
                     setStorePh(dataDoc.data().reqStore);
                     if (dataDoc.data().accept) {
                         console.log("accepted");
-                        clearInterval(timer);
                         break;
                     }
                 }
             }
-        }, 1000);
+        }
 
-        setTimeout(() => {
-            clearInterval(timer);
-        }, 15000);
+        acceptStore();
 
-        return () => clearInterval(timer);
     }, []);
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(userInfoCollectionsRef, (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === 'modified') {
+                    const data = change.doc.data();
+                    if (data.email === curUser.email) {
+                        setUserStore({ ...data, id: change.doc.id });
+                        setAvail(data.accept);
+                        setStorePh(data.reqStore);
+                    }
+                }
+            });
+        });
+
+        return () => unsubscribe();
+    }, [curUser.accept]);
 
     const { state } = useLocation();
     const userLoc = state.userLocation;

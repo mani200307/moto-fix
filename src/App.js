@@ -14,6 +14,7 @@ import StoreRoute from './privateRoute/StoreRoute'
 import StoreHome from './pages/StoreHome'
 import Book from './pages/Book'
 import UserDetails from './pages/UserDetails'
+import MainHome from './pages/MainHome'
 
 const App = () => {
 
@@ -21,7 +22,8 @@ const App = () => {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path='/' element={<Login />} />
+          <Route path='/' element={<MainHome />} />
+          <Route path='/login' element={<Login />} />
           <Route exact path='/home' element={<UserRoute />}>
             <Route exact path='/home' element={<Home />} />
           </Route>

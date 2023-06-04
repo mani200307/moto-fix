@@ -47,7 +47,6 @@ const AcceptUser = ({ storeDetails }) => {
       if (dataDoc.data().reqUser === email) {
         console.log('Called');
         await updateDoc(storeDoc, { reqUser: '' });
-        break;
       }
     }
   };
