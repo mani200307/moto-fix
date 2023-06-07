@@ -11,6 +11,7 @@ const MainHome = () => {
                 <div className='flex gap-10'>
                     <Link to='/home'><Button>Vehicle Owner</Button></Link>
                     <Link to='/store'><Button>Store Owner</Button></Link>
+                    <Link to='/stre'><Button>Store Owner</Button></Link>
                 </div>
             </div>
             <footer className='fixed bottom-0'>
