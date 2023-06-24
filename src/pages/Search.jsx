@@ -9,6 +9,8 @@ const Search = () => {
   const { state } = useLocation();
   const userCoords = state.location.coordinates;
   const type = state.type;
+  const [storeInfo, setStoreInfo] = useState([]);
+  const storeInfoCollectionsRef = collection(db, "store");
   var avail = false;
 
   const findDist = (a1, a2) => {
@@ -30,9 +32,6 @@ const Search = () => {
     }
     return loc;
   }
-
-  const [storeInfo, setStoreInfo] = useState([]);
-  const storeInfoCollectionsRef = collection(db, "store");
 
   var locations = storeInfo.map((info) => { return { lat: info.lat, lng: info.lng, type: info.type, email: info.email, id: info.id } })
   locations = getNearestStores(locations, userCoords);

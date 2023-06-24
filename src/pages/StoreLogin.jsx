@@ -18,7 +18,7 @@ const StoreLogin = () => {
             setLoading(true);
             await login(email, password)
             setSigned(true);
-            navigate('/home');
+            navigate('/store/home');
         }
         catch (err) {
             console.log(err);
