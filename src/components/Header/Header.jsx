@@ -1,22 +1,18 @@
 import React, { useState } from 'react'
-import { Button } from 'react-bootstrap';
 import 'tailwindcss/tailwind.css';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
-    const [error, setError] = useState('')
     const { curUser, logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = async () => {
-        setError('');
-
         try {
             await logout();
             navigate('/');
         } catch (err) {
-            setError('Failed to log out')
+            alert('Failed to log out')
         }
     }
 
@@ -25,8 +21,8 @@ const Header = () => {
             <div className='flex justify-between m-10'>
                 <Link to='/home' className='text-3xl border-gray-100 ml-2 no-underline text-black'>MotoFix</Link>
                 <div className='flex flex-col mt-1 items-center'>
-                    <div className='text-md'>{curUser.email}</div>
-                    <button onClick={handleLogout} className='text-lg border-gray-100 no-underline text-black'>Log out</button>
+                    <div className='text-md text-blue-600'>{curUser.email.split('@')[0]}</div>
+                    <button onClick={handleLogout} className='text-sm mt-1 bg-base-300 p-1 rounded-lg border-gray-100 no-underline text-black'>Log out</button>
                 </div>
             </div>
         </div>

@@ -17,21 +17,27 @@ const Map = ({ location, locationChanged }) => {
     })
 
     useEffect(() => {
-        if (locationChanged) {
+        if (location.loaded) {
             setMapCenter([location.coordinates.lat, location.coordinates.lng]);
             setMapKey(prevKey => prevKey + 1);
         }
     }, [location, locationChanged]);
 
     return (
-        <MapContainer className='w-full flex-1' center={mapCenter} zoom={13} key={mapKey} ref={mapRef}>
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker icon={markerIcon} position={[location.coordinates.lat, location.coordinates.lng]}>
-            </Marker>
-        </MapContainer>
+        <>
+            {
+                location.loaded ?
+                    <MapContainer className='w-full flex-1' center={mapCenter} zoom={13} key={mapKey} ref={mapRef}>
+                        <TileLayer
+                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker icon={markerIcon} position={[location.coordinates.lat, location.coordinates.lng]}>
+                        </Marker>
+                    </MapContainer>
+                    : <span className="loading loading-spinner loading-lg"></span>
+            }
+        </>
     )
 }
 
