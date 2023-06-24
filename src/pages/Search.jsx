@@ -23,7 +23,7 @@ const Search = () => {
     for (var i = 0; i < locations.length; i++) {
       if (locations[i].type !== type)
         continue;
-      if (findDist(locations[i], userCoords) < 100) {
+      if (findDist(locations[i], userCoords) < 5) {
         avail = true;
         loc.push(locations[i]);
       }

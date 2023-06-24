@@ -22,7 +22,7 @@ const Header = () => {
                 <Link to='/home' className='text-3xl border-gray-100 ml-2 no-underline text-black'>MotoFix</Link>
                 <div className='flex flex-col mt-1 items-center'>
                     <div className='text-md text-blue-600'>{curUser.email.split('@')[0]}</div>
-                    <button onClick={handleLogout} className='text-lg border-gray-100 no-underline text-black'>Log out</button>
+                    <button onClick={handleLogout} className='text-sm mt-1 bg-base-300 p-1 rounded-lg border-gray-100 no-underline text-black'>Log out</button>
                 </div>
             </div>
         </div>
