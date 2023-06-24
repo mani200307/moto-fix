@@ -23,7 +23,7 @@ const MapPoints = ({ locations, userCoord }) => {
 
 
     useEffect(() => {
-        setMapKey(mapKey + 1); // Update the mapKey to re-render the map when locations change
+        setMapKey(mapKey + 1);
     }, [locations]);
 
     return (
