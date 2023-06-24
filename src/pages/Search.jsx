@@ -49,15 +49,19 @@ const Search = () => {
   return (
     <div className="flex flex-col h-screen md:flex-row">
       <MapPoints locations={locations} userCoord={userCoords} />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col">
         <Header search={true} avail={avail} />
+        <div className='mt-5 flex items-center justify-center'>
+          {avail ? <h3>Great, Store available</h3> : <h3>Oops, No available stores</h3>}
+        </div>
         {avail && (
-          <div className='m-12 flex items-center justify-center my-2'>
-            <Link to='/book' state={{userLocation : userCoords, locations : locations}}><button type="button" className="btn btn-success">Book Now!</button></Link>
+          <div className='m-12 mt-3 flex items-center justify-center my-2'>
+            <Link to='/book' state={{ userLocation: userCoords, locations: locations }}><button type="button" className="btn btn-success">Book Now!</button></Link>
           </div>
         )}
-        <div className='mt-8 flex items-center justify-center'>
-          {avail ? <h3>Great, Store available</h3> : <h3>Oops, No available stores</h3>}
+        <div className='flex-1'></div>
+        <div className='flex flex-col mb-5 justify-end items-center'>
+          <Link to='/home' className='bg-base-300 rounded-lg'><button className='btn px-4'>Back</button></Link>
         </div>
       </div>
     </div>

@@ -46,6 +46,10 @@ const StoreSignup = () => {
         setLoading(false);
     }
 
+    const fetchLoc = () => {
+
+    }
+
     return (
         <>
             <Container className='flex flex-col justify-center items-center min-h-screen'>
@@ -89,14 +93,15 @@ const StoreSignup = () => {
                                 <Form.Label>Address</Form.Label>
                                 <Form.Control type='text' ref={addrRef} required></Form.Control>
                             </Form.Group>
-                            <Form.Group>
+                            {/* <Form.Group>
                                 <Form.Label>Latitude</Form.Label>
                                 <Form.Control type='number' ref={latRef} required></Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Longitude</Form.Label>
                                 <Form.Control type='number' ref={lngRef} required></Form.Control>
-                            </Form.Group>
+                            </Form.Group> */}
+                            <button onClick={fetchLoc} className='bg-gray-500 text-white rounded-md p-2 mt-2'>Fetch current location</button>
                             <Button disabled={loading} className='w-100 mt-4' onClick={handleSubmit}>Register</Button>
                         </Form>
                     </Card.Body>

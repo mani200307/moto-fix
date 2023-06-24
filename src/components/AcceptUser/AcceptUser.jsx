@@ -10,6 +10,8 @@ const AcceptUser = ({ storeDetails }) => {
   const [curStore, setCurStore] = useState();
   const storeInfoCollectionsRef = collection(db, 'store');
 
+  const [accepted, setAccepted] = useState(false);
+
   useEffect(() => {
     const getUserData = async () => {
       const data = await getDocs(userInfoCollectionsRef);
@@ -55,28 +57,35 @@ const AcceptUser = ({ storeDetails }) => {
     const storeDoc = doc(db, 'auth-user', userStore.id);
     await updateDoc(storeDoc, { accept: true, reqStore: storeDetails.phnum });
     updateAllStores(userStore.email);
+    const thisStore = doc(db, 'store', storeDetails.id);
+    await updateDoc(thisStore, { reqUser: curStore.reqUser });
     setBtnClicked(true);
+    setAccepted(true);
   };
 
   const rejectUser = async () => {
     const storeDoc = doc(db, 'auth-user', userStore.id);
     await updateDoc(storeDoc, { accept: false });
     setBtnClicked(true);
+    setAccepted(false);
   };
 
   return (
-    <div id="accept" style={{ display: curStore && curStore.reqUser ? 'block' : 'none' }}>
-      {!btnClicked && curStore && curStore.reqUser && (
-        <>
-          <h3>{curStore.reqUser}</h3>
-          <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-            Accept
-          </Button>
-          <Button id="btn" onClick={rejectUser} variant="danger">
-            Reject
-          </Button>
-        </>
-      )}
+    <div>
+      <div id="accept" className='flex justify-center items-center flex-col ml-5'>
+        {!btnClicked && curStore && curStore.reqUser && (
+          <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
+            <h3>{curStore.reqUser}</h3>
+            <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
+              Accept
+            </Button>
+            <Button id="btn" onClick={rejectUser} variant="danger">
+              Reject
+            </Button>
+          </div>
+        )}
+      </div>
+      <h1>Hello</h1>
     </div>
   );
 };
