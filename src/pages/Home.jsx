@@ -20,7 +20,7 @@ const Home = () => {
         <Controls location={location} locationChanged={locationChanged} />
         <div className="flex-1"></div>
         <div className="flex flex-col mb-5 justify-end items-center">
-          <h1 className="text-xl">Book your store</h1>
+          {/* <h1 className="text-xl">Book your store</h1> */}
         </div>
       </div>
     </div>
