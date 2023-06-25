@@ -2,6 +2,7 @@ import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { db } from '../../firebase';
+import { Link } from 'react-router-dom';
 
 const AcceptUser = ({ storeDetails }) => {
   const [userStore, setUserStore] = useState();
@@ -73,19 +74,20 @@ const AcceptUser = ({ storeDetails }) => {
   return (
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
-        {!btnClicked && curStore && curStore.reqUser && (
+        {curStore && curStore.reqUser && (
           <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
             <h3>{curStore.reqUser}</h3>
-            <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-              Accept
-            </Button>
+            <Link to='/store/accept' state={{'userDetails': userStore}}>
+              <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
+                Accept
+              </Button>
+            </Link>
             <Button id="btn" onClick={rejectUser} variant="danger">
               Reject
             </Button>
           </div>
         )}
       </div>
-      <h1>Hello</h1>
     </div>
   );
 };
