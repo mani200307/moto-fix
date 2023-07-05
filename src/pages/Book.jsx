@@ -121,7 +121,7 @@ const Book = () => {
                             <h3>Waiting for stores to accept</h3>
                         </div>
                     )}
-                    <Link to='/home'><Button onClick={cancelBooking}>Cancel</Button></Link>
+                    <Link to='/home'><Button onClick={cancelBooking}>Cancel / Finish</Button></Link>
                 </div>
             </div>
         </div>

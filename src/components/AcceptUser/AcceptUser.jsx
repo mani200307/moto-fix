@@ -74,7 +74,7 @@ const AcceptUser = ({ storeDetails }) => {
   return (
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
-        {curStore && curStore.reqUser && (
+        {curStore && curStore.reqUser && !btnClicked && (
           <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
             <h3>{curStore.reqUser}</h3>
             <Link to='/store/accept' state={{'userDetails': userStore}}>
