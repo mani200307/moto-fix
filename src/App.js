@@ -14,6 +14,7 @@ import StoreRoute from './privateRoute/StoreRoute'
 import StoreHome from './pages/StoreHome'
 import Book from './pages/Book'
 import MainHome from './pages/MainHome'
+import Accepted from './components/AcceptUser/Accepted'
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
           </Route>
           <Route path='/store/signup' element={<StoreSignup />} />
           <Route path='/store/login' element={<StoreLogin />} />
+          <Route path='/store/accept' element={<Accepted />} />
           <Route exact path='/search' element={<UserRoute />}>
             <Route exact path='/search' element={<Search />} />
           </Route>

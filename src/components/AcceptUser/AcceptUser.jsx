@@ -2,6 +2,7 @@ import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { db } from '../../firebase';
+import { Link } from 'react-router-dom';
 
 const AcceptUser = ({ storeDetails }) => {
   const [userStore, setUserStore] = useState();
@@ -88,20 +89,15 @@ const AcceptUser = ({ storeDetails }) => {
   return (
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
-        {!btnClicked && curStore && curStore.reqUser && userDetails && (
-          <div className='bg-base-200 w-fit rounded-lg p-3 flex flex-col gap-2'>
-            <div className='flex flex-col items-center'>
-              <h2>{userDetails.username}</h2>
-              <h3>{userDetails.phnum}</h3>
-            </div>
-            <div className='flex gap-3'>
-              <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-                Accept
-              </Button>
-              <Button id="btn" onClick={rejectUser} variant="danger">
-                Reject
-              </Button>
-            </div>
+        {!btnClicked && curStore && curStore.reqUser && (
+          <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
+            <h3>{curStore.reqUser}</h3>
+            <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
+              Accept
+            </Button>
+            <Button id="btn" onClick={rejectUser} variant="danger">
+              Reject
+            </Button>
           </div>
         )}
       </div>
