@@ -92,12 +92,32 @@ const Book = () => {
         updateUser(locations);
     }, []);
 
+    const [matchingStores, setMatchingStores] = useState([]);
+
+    useEffect(() => {
+        const getMatchingStores = async () => {
+            const storeSnapshot = await getDocs(collection(db, 'store'));
+            const stores = [];
+            storeSnapshot.forEach((storeDoc) => {
+                const storeData = storeDoc.data();
+                if (storePh === storeData.email) {
+                    stores.push({ ...storeData, id: storeDoc.id });
+                }
+            });
+            setMatchingStores(stores);
+            console.log(stores);
+        };
+
+        getMatchingStores();
+    }, [storePh]);
+
     const cancelBooking = async () => {
         const storeDoc = doc(db, 'auth-user', userStore.id);
         await updateDoc(storeDoc, { accept: false });
+        await updateDoc(storeDoc, { reqStore: '' });
         for (var i = 0; i < locations.length; i++) {
             const storeDoc = doc(db, 'store', locations[i].id);
-            await updateDoc(storeDoc, { reqUser: '' });
+            await updateDoc(storeDoc, { reqUser: '', accept: false});
         }
         setAvail(false);
     }
@@ -112,7 +132,9 @@ const Book = () => {
                     {avail ? (
                         <div className='flex-col justify-center items-center text-center gap-3 p-10'>
                             <h3>Store booked! </h3>
-                            <h3>Contact details: {storePh}</h3>
+                            <h3>{matchingStores[0]?.name}</h3>
+                            <h4>{matchingStores[0]?.address}</h4>
+                            <h4>{matchingStores[0]?.phnum}</h4>
                         </div>
                     ) : (
                         <div className='flex flex-col justify-center items-center gap-10 p-10'>

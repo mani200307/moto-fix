@@ -5,11 +5,10 @@ import { db } from '../../firebase';
 
 const AcceptUser = ({ storeDetails }) => {
   const [userStore, setUserStore] = useState();
+  const [userDetails, setUserDetails] = useState(null);
   const userInfoCollectionsRef = collection(db, 'auth-user');
-
   const [curStore, setCurStore] = useState();
   const storeInfoCollectionsRef = collection(db, 'store');
-
   const [accepted, setAccepted] = useState(false);
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const AcceptUser = ({ storeDetails }) => {
 
   useEffect(() => {
     const getStoreData = async () => {
-      console.log(storeDetails);
       const storeDoc = doc(db, 'store', storeDetails.id);
       const dataDoc = await getDoc(storeDoc);
       setCurStore(dataDoc.data());
@@ -38,6 +36,24 @@ const AcceptUser = ({ storeDetails }) => {
 
     getStoreData();
   }, [storeDetails.id]);
+
+  useEffect(() => {
+    const getStoreData = async () => {
+      const storeDoc = doc(db, 'store', storeDetails.id);
+      const dataDoc = await getDoc(storeDoc);
+      setCurStore(dataDoc.data());
+
+      if (dataDoc.data().reqUser) {
+        const querySnapshot = await getDocs(collection(db, 'auth-user'));
+        const userData = querySnapshot.docs.find((doc) => doc.data().email === dataDoc.data().reqUser);
+        if (userData) {
+          setUserDetails(userData.data());
+        }
+      }
+    };
+
+    getStoreData();
+  }, [storeDetails.id, curStore?.reqUser]);
 
   const [btnClicked, setBtnClicked] = useState(false);
 
@@ -47,7 +63,6 @@ const AcceptUser = ({ storeDetails }) => {
       const storeDoc = doc(db, 'store', data.docs[i].id);
       const dataDoc = await getDoc(storeDoc);
       if (dataDoc.data().reqUser === email) {
-        console.log('Called');
         await updateDoc(storeDoc, { reqUser: '' });
       }
     }
@@ -55,10 +70,10 @@ const AcceptUser = ({ storeDetails }) => {
 
   const acceptUser = async () => {
     const storeDoc = doc(db, 'auth-user', userStore.id);
-    await updateDoc(storeDoc, { accept: true, reqStore: storeDetails.phnum });
-    updateAllStores(userStore.email);
+    await updateDoc(storeDoc, { accept: true, reqStore: storeDetails.email });
+    await updateAllStores(userStore.email);
     const thisStore = doc(db, 'store', storeDetails.id);
-    await updateDoc(thisStore, { reqUser: curStore.reqUser });
+    await updateDoc(thisStore, { accept: true });
     setBtnClicked(true);
     setAccepted(true);
   };
@@ -73,19 +88,23 @@ const AcceptUser = ({ storeDetails }) => {
   return (
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
-        {!btnClicked && curStore && curStore.reqUser && (
-          <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
-            <h3>{curStore.reqUser}</h3>
-            <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-              Accept
-            </Button>
-            <Button id="btn" onClick={rejectUser} variant="danger">
-              Reject
-            </Button>
+        {!btnClicked && curStore && curStore.reqUser && userDetails && (
+          <div className='bg-base-200 w-fit rounded-lg p-3 flex flex-col gap-2'>
+            <div className='flex flex-col items-center'>
+              <h2>{userDetails.username}</h2>
+              <h3>{userDetails.phnum}</h3>
+            </div>
+            <div className='flex gap-3'>
+              <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
+                Accept
+              </Button>
+              <Button id="btn" onClick={rejectUser} variant="danger">
+                Reject
+              </Button>
+            </div>
           </div>
         )}
       </div>
-      <h1>Hello</h1>
     </div>
   );
 };
