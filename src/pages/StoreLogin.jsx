@@ -57,7 +57,7 @@ const StoreLogin = () => {
                 </div>
                 <div className='flex flex-col justify-center items-center gap-3'>
                     {loading ? <span className="loading loading-spinner loading-md"></span> : <button onClick={handleSubmit} className="mt-3 btn btn-primary w-fit">Sign in</button>}
-                    <h1 className='text-sm'>New User? <Link href='/signup' className='text-sm text-blue-500'>Sign up</Link></h1>
+                    <h1 className='text-sm'>New User? <Link to='/store/signup' className='text-sm text-blue-500'>Sign up</Link></h1>
                 </div>
             </div>
         </div>

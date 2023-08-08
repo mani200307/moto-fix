@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { db } from '../../firebase';
 import { Link } from 'react-router-dom';
+import { useCheckAvail } from '../../contexts/store';
 
 const AcceptUser = ({ storeDetails }) => {
   const [userStore, setUserStore] = useState();
@@ -11,6 +12,10 @@ const AcceptUser = ({ storeDetails }) => {
   const [curStore, setCurStore] = useState();
   const storeInfoCollectionsRef = collection(db, 'store');
   const [accepted, setAccepted] = useState(false);
+  const { avail, setAvail } = useCheckAvail();
+
+  console.log(userDetails);
+  console.log('Accept', avail);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -77,6 +82,7 @@ const AcceptUser = ({ storeDetails }) => {
     await updateDoc(thisStore, { accept: true });
     setBtnClicked(true);
     setAccepted(true);
+    setAvail(true);
   };
 
   const rejectUser = async () => {
@@ -84,20 +90,24 @@ const AcceptUser = ({ storeDetails }) => {
     await updateDoc(storeDoc, { accept: false });
     setBtnClicked(true);
     setAccepted(false);
+    setAvail(false);
   };
 
   return (
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
         {!btnClicked && curStore && curStore.reqUser && (
-          <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
-            <h3>{curStore.reqUser}</h3>
-            <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-              Accept
-            </Button>
-            <Button id="btn" onClick={rejectUser} variant="danger">
-              Reject
-            </Button>
+          <div className='bg-base-200 flex flex-col items-center justify-center w-fit rounded-lg p-4 gap-2'>
+            <h3>{userDetails?.username}</h3>
+            <h3>{userDetails?.phnum}</h3>
+            <div className='flex gap-3'>
+              <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
+                Accept
+              </Button>
+              <Button id="btn" onClick={rejectUser} variant="danger">
+                Reject
+              </Button>
+            </div>
           </div>
         )}
       </div>
