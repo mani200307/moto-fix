@@ -13,6 +13,8 @@ const AcceptUser = ({ storeDetails }) => {
 
   const [accepted, setAccepted] = useState(false);
 
+  console.log(curStore);
+
   useEffect(() => {
     const getUserData = async () => {
       const data = await getDocs(userInfoCollectionsRef);
@@ -21,6 +23,7 @@ const AcceptUser = ({ storeDetails }) => {
         const dataDoc = await getDoc(storeDoc);
         if (dataDoc.data().email === storeDetails.reqUser) {
           setUserStore({ ...dataDoc.data(), id: dataDoc.id });
+          console.log({ ...dataDoc.data(), id: dataDoc.id });
           break;
         }
       }
@@ -75,16 +78,21 @@ const AcceptUser = ({ storeDetails }) => {
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
         {curStore && curStore.reqUser && !btnClicked && (
-          <div className='bg-base-200 w-fit rounded-lg p-2 flex gap-2'>
-            <h3>{curStore.reqUser}</h3>
-            <Link to='/store/accept' state={{'userDetails': userStore}}>
-              <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-                Accept
-              </Button>
-            </Link>
-            <Button id="btn" onClick={rejectUser} variant="danger">
-              Reject
-            </Button>
+          <div className="card w-96 bg-base-100 shadow-xl">
+            <div className="card-body">
+              <h2 className="card-title">{curStore.reqUser}</h2>
+              <p>{}</p>
+              <div className="card-actions justify-end">
+                <Link to='/store/accept' state={{ 'userDetails': userStore }}>
+                  <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
+                    Accept
+                  </Button>
+                </Link>
+                <Button id="btn" onClick={rejectUser} variant="danger">
+                  Reject
+                </Button>
+              </div>
+            </div>
           </div>
         )}
       </div>
