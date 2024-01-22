@@ -99,7 +99,6 @@ const AcceptUser = ({ storeDetails }) => {
   return (
     <div>
       <div id="accept" className='flex justify-center items-center flex-col ml-5'>
-<<<<<<< HEAD
         {curStore && curStore.reqUser && !btnClicked && (
           <div className="card w-96 bg-base-100 shadow-xl">
             <div className="card-body">
@@ -115,19 +114,6 @@ const AcceptUser = ({ storeDetails }) => {
                   Reject
                 </Button>
               </div>
-=======
-        {!btnClicked && curStore && curStore.reqUser && (
-          <div className='bg-base-200 flex flex-col items-center justify-center w-fit rounded-lg p-4 gap-2'>
-            <h3>{userDetails?.username}</h3>
-            <h3>{userDetails?.phnum}</h3>
-            <div className='flex gap-3'>
-              <Button temp={curStore.reqUser} id="btn" onClick={acceptUser} variant="success">
-                Accept
-              </Button>
-              <Button id="btn" onClick={rejectUser} variant="danger">
-                Reject
-              </Button>
->>>>>>> f10d5202558b7578db739eefeca6f9feeea83296
             </div>
           </div>
         )}
