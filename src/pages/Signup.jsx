@@ -23,6 +23,7 @@ const Signup = () => {
         setName('');
         setEmail('');
         setPassword('');
+        setPhnum('');
     };
 
     const validateForm = (e) => {
@@ -100,8 +101,7 @@ const Signup = () => {
             }
 
             await addDoc(userInfoCollectionsRef, { email: email, username: name, phnum: phnum });
-            alert('Data inserted!');
-
+            
             setSigned(true);
             resetForm();
             setLoading(false);
@@ -136,7 +136,7 @@ const Signup = () => {
                         <span className="label-text text-lg">Mobile number</span>
                     </label>
                     <div className="flex flex-col">
-                        <input name="name" placeholder="Enter your mobile number" type="text" value={phnum} onChange={validateForm} className="input input-bordered max-w-xs w-60" />
+                        <input name="phnum" placeholder="Enter your mobile number" type="text" value={phnum} onChange={validateForm} className="input input-bordered max-w-xs w-60" />
                     </div>
                     <div className="flex flex-col">
                         <label className="label">
